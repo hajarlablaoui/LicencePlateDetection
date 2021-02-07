@@ -14,7 +14,6 @@ dbName = "carsPlates.db"
 #"""
 
 '''
-
 #Connection
 conn=sqlite3.connect(dbName)
 curs=conn.cursor()
