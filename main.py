@@ -2,6 +2,7 @@ import cv2
 import imutils
 import numpy as np
 import pytesseract
+from dbCreation import plateToDB
 
 pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
 
@@ -46,6 +47,7 @@ new_image = cv2.bitwise_and(img,img,mask=mask)
 Cropped = gray[topx:bottomx+1, topy:bottomy+1]
 
 text = pytesseract.image_to_string(Cropped, config='--psm 11')
+plateToDB(text)
 
 print("programming_fever's License Plate Recognition\n")
 print("Detected license plate Number is:",text)
