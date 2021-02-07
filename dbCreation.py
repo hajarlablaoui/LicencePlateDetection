@@ -1,6 +1,7 @@
 import mysql.connector
 import datetime
 
+
 mydb = mysql.connector.connect(
     host="localhost",
     username="root",
@@ -8,6 +9,7 @@ mydb = mysql.connector.connect(
     database="carsPlates",
 )
 
+#cursor creation
 mycursor = mydb.cursor()
 
 # mycursor.execute("CREATE database carsPlates")
