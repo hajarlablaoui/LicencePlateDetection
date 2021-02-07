@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
+    <data-source source="LOCAL" name="carsPlates" uuid="350f6ef2-fa83-4771-9ab4-f8546555006d">
+      <driver-ref>sqlite.xerial</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
+      <jdbc-url>jdbc:sqlite:C:\Users\hajar\PycharmProjects\detectionPlaqueImage\carsPlates.db</jdbc-url>
+    </data-source>
+  </component>
+</project>
