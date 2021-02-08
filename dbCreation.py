@@ -12,21 +12,10 @@ mydb = mysql.connector.connect(
 #cursor creation
 mycursor = mydb.cursor()
 
-# mycursor.execute("CREATE database carsPlates")
-# mycursor.execute("DROP table if exists facture")
-# mycursor.execute("Create table car(id integer primary key AUTO_INCREMENT,plate varchar(20),dateEntree date, dateSortie date)")
-
-# mycursor.execute("Create table park(id integer primary key AUTO_INCREMENT, plate varchar(20),dateEntree datetime, dateSortie datetime default null)")
-
-# sqlform = "insert into park(plate,dateEntree,dateSortie) values (%s,%s,%s)"
-
-# ars = [("34-ABC","2006-01-05","2006-01-05"),("78648AABB","2006-01-05","2006-01-05"),("OIAHDKX SJ","2006-01-05","2006-01-05")]
-
-# mycursor.executemany(sqlform,cars)
-
-# mycursor.execute("Create table facture(id integer primary key AUTO_INCREMENT,  parkId int,FOREIGN KEY (parkId) REFERENCES park(id),price double,datePayment datetime default null)")
-
-
+#mycursor.execute("CREATE database carsPlates")
+#mycursor.execute("DROP table if exists facture")
+#mycursor.execute("Create table park(id integer primary key AUTO_INCREMENT, plate varchar(20),dateEntree datetime, dateSortie datetime default null)")
+#mycursor.execute("Create table facture(id integer primary key AUTO_INCREMENT,  parkId int,FOREIGN KEY (parkId) REFERENCES park(id),price double,datePayment datetime default now())")
 mydb.commit()
 
 
@@ -38,9 +27,7 @@ def plateToDB(plate):
 
     sql = "SELECT * FROM park WHERE plate = %s and dateSortie is NULL"
     pl = (plate,)
-
     mycursor.execute(sql, pl)
-
     myresult = mycursor.fetchall()
     print(myresult)
     if len(myresult) > 0:
@@ -52,7 +39,8 @@ def plateToDB(plate):
         pl = (myresult[0][0],)
         mycursor.execute(sql, pl)
         myresult1 = mycursor.fetchall()
-        parcPrice(myresult1[0][0], myresult1[0][1], myresult1[0][2])
+        parcPrice(myresult1[0][0], myresult1[0][2], myresult1[0][3])
+
     else:
         sqlform = "insert into park(plate,dateEntree) values (%s,%s)"
         pl = (plate, datetime.datetime.now())
@@ -61,13 +49,10 @@ def plateToDB(plate):
 
 
 def parcPrice(id, dateEntree, dateSortie):
-    heureprix = 10
-    FMT = '%Y/%d/%m %H:%M:%S'
-    print(dateEntree)
-    tdelta = datetime.datetime.strptime(dateSortie, FMT) - datetime.datetime.strptime(dateEntree, FMT)
-    print(tdelta)
-    price = 0
-    if price == 0:
+    prixheure = 10 #dh
+    time=(dateSortie-dateEntree).total_seconds()
+    price = (time / 3600) * prixheure
+    if price < 10:
         price = 10
     sqlform = "insert into facture(parkId,price) values (%s,%s)"
     pl = (id, price)

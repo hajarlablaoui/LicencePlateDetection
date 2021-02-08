@@ -3,10 +3,11 @@ import imutils
 import numpy as np
 import pytesseract
 from dbCreation import plateToDB
+import random
 
 pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
-
-img = cv2.imread('images/audii - Copie.jpg',cv2.IMREAD_COLOR)
+images=['images/2088.jpeg','images/audi.jpg','images/peugeot.jpg','images/skoda.jpeg','images/volvo.jpg']
+img = cv2.imread(random.choice(images),cv2.IMREAD_COLOR)
 img = cv2.resize(img, (600,400) )
 
 gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
@@ -20,7 +21,6 @@ contours = sorted(contours, key = cv2.contourArea, reverse = True)[:10]
 screenCnt = None
 
 for c in contours:
-
     peri = cv2.arcLength(c, True)
     approx = cv2.approxPolyDP(c, 0.018 * peri, True)
 
